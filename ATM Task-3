@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+class ATM_M {
+    float Balance;
+    int Pin = 7549;
+    Scanner sc = new Scanner(System.in);
+
+    public void check_pin() {
+        int attempts = 3;
+        while (attempts > 0) {
+            System.out.print("Enter your pin = ");
+            int enter_pin = sc.nextInt();
+            if (enter_pin == Pin) {
+                menu();
+                return; // Exit the loop and method if the PIN is correct
+            } else {
+                System.out.print("Incorrect PIN. Attempts remaining: " + (--attempts));
+            }
+        }
+        System.out.print("Too many incorrect attempts. Exiting.");
+    }
+
+    public void menu() {
+        System.out.println("choice Option 1 To 4.");
+        System.out.println("1. Check A/c Balance");
+        System.out.println("2. Withdraw Money");
+        System.out.println("3. Deposit Money");
+        System.out.println("4. Exit");
+        int opt = sc.nextInt();
+        switch (opt) {
+            case 1:
+                checkBalance();
+                break;
+            case 2:
+                WithdrawMoney();
+                break;
+            case 3:
+                DepositMoney();
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Invalid choice. Please Retry.");
+                menu();
+        }
+    }
+
+    public void checkBalance() {
+        System.out.println("Balance: " + Balance);
+        menu();
+    }
+
+    public void WithdrawMoney() {
+        System.out.println("Enter Withdraw amount: ");
+        float withdrawAmount = sc.nextFloat();
+        if (withdrawAmount > Balance) {
+            System.out.println("Zero Balance!");
+        } else {
+            Balance -= withdrawAmount;
+            System.out.println("Successful Withdraw.");
+        }
+        menu();
+    }
+
+    public void DepositMoney() {
+        System.out.println("Enter Amount: ");
+        float DepositAmount = sc.nextFloat();
+        if (DepositAmount < 0) {
+            System.out.println("Invalid Amount!");
+        } else {
+            Balance += DepositAmount;
+            System.out.println("Deposit Successful");
+        }
+        menu();
+    }
+}
+
+public class ATM {
+    public static void main(String[] args) {
+        ATM_M obj = new ATM_M();
+        obj.check_pin();
+    }
+}
